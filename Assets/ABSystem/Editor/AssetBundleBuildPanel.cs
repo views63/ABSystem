@@ -83,7 +83,9 @@ namespace Tangzx.ABSystem
             r.width = 50;
             if (GUI.Button(r, "Select"))
             {
-                filter.path = SelectFolder();
+                var path = SelectFolder();
+                if (path != null)
+                    filter.path = path;
             }
 
             r.xMin = r.xMax + GAP;
@@ -119,10 +121,10 @@ namespace Tangzx.ABSystem
             _config = LoadAssetAtPath<AssetBundleBuildConfig>(savePath);
             if (_config == null)
             {
-                _config = new AssetBundleBuildConfig();
+                _config = CreateInstance<AssetBundleBuildConfig>();
             }
         }
-
+        
         void InitFilterListDrawer()
         {
             _list = new ReorderableList(_config.filters, typeof(AssetBundleFilter));
